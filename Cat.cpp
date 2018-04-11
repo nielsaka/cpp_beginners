@@ -24,3 +24,26 @@ void Cat::pet() {
 void Cat::shower() {
 	happy = false;
 }
+
+
+// constructor
+// can be anywhere in file; but better at beginning of file
+// convention(?): method has same name as class
+Cat::Cat() {
+
+	cout << "Cat here!" << endl;
+
+	// In C++98, this is the place to assign values to 
+	// variables.
+
+	happy = true;
+
+}
+
+// destructor
+// name of constructor/class with a tilde prefixed
+// will be called at end of scope when object is 
+// destroyed
+Cat::~Cat() {
+	cout << "Cat destroyed" << endl;
+}

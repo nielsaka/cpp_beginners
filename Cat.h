@@ -15,7 +15,9 @@ void jump();
 
 class Cat {
 private:
-	bool happy; // will not be initialized! use constructor (in c++98)
+	// will not be initialized! use constructor (in c++98)
+	// value will be garbage; any random value.
+	bool happy; 
 
 public: 
 	// these methods are accessible from outside of object/class (scope?)
@@ -24,6 +26,12 @@ public:
 	void jump();
 	void pet();
 	void shower();
+
+	// in C++98, use constructor
+	Cat(); // no return type
+
+	// use destructor
+	~Cat();
 
 	// avoid manipulation of data from outside! do not want to make variables public
 	// instead, encapsulate in class and surface via get/set method (?)
