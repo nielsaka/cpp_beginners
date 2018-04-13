@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
 
 	// get / set : "almost as bad as exposing variable directly"
 	// "but not quite as bad": have documented standard access; implementation can
-	// change, interface stays constant
+	// change, interface stays constant.
 	cout << "Hi again, my name is still " << my_person.getName() << endl;
 
 	my_person.setName("Johnny");
