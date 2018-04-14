@@ -21,7 +21,20 @@ public:
 	// can add another constructor
 	// (here, inline implementation)
 	// arguments need to differ from private variables
-	Person(string new_name, int new_age) {name = new_name; age = new_age;};
+	// OR can use "this" keyword
+	Person(string name, int new_age) {
+		this->name = name; 
+		// "alleviates the need for new names"
+		// also useful in set methods
+
+		//"this" contains memory location of object
+		// pointer variable
+
+		// can look at pointer
+		cout << "Memory location of object: "<< this << endl;
+
+		age = new_age;
+	};
 	
 	// can have arbitrary number of constructors
 	// as long as they differ in their arguments
