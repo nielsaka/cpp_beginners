@@ -1,8 +1,10 @@
 #include "Person.h"
 #include <sstream>
 
-Person::Person() {
-	name = "Geoffrey";
+// onyl for constructors: constructor initialisation list
+Person::Person(): name("Geoffrey") { //, age(0) {
+	// can also mix initialisation via list above
+	// or details down here in function body
 	age = 99;
 }
 

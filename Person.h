@@ -22,6 +22,8 @@ public:
 	// (here, inline implementation)
 	// arguments need to differ from private variables
 	// OR can use "this" keyword
+
+	/*
 	Person(string name, int new_age) {
 		this->name = name; 
 		// "alleviates the need for new names"
@@ -35,7 +37,12 @@ public:
 
 		age = new_age;
 	};
-	
+	*/
+
+	// ANOTHER (recommended) way: use constructor initialisation list
+	Person(string name, int age): name(name), age(age) {};
+
+
 	// can have arbitrary number of constructors
 	// as long as they differ in their arguments
 
