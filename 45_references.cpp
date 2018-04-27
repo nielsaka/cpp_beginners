@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
 
 	// not quite the same as pointer
 	// syntax a little different
-	// pointer can do more (what exactly? increment, decrease pointer.
+	// pointer can do more (what exactly? increment, decrease pointer)
 
 	val_2 = 10;
 

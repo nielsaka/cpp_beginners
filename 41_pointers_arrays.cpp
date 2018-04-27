@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
 	cout << *p_text << endl; 
 
 	// in for loop
-	p_text = text;
+	p_text = text; // reset position
 	for (int i = 0; i < len_text; ++i, p_text++)
 	{
 		cout << *p_text << " " << flush;
