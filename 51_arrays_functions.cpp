@@ -46,18 +46,22 @@ void show_3(string* text, const int elem) {
 // alternatively, pass on a reference
 
 // difficulty: string& text[3] is an array of references to strings
-// instead, want reference to array of strings
-// confusing! figure out on again.
+// instead, want reference to array of 3 strings: 'string(& text)[3]'
+// confusing! think through again.
 
-// string(& text)[2] will not work!
+// string(& text)[2] will not work! must be correct length
 void show_4(string(& text)[3]) {
+
+	// works just as usual
 	cout << *(text + 0) << endl;
 	cout << text[1] << endl;
 	cout << *(text + 2) << endl;
 
+	// BUT!
 	cout << sizeof(text) << endl; // 96 !
 
-	text[2] = "I don't like " + text[2] + "s"; // changes original array
+	// changes original array
+	text[2] = "I don't like " + text[2] + "s"; 
 }
 
 // BAD
@@ -95,7 +99,9 @@ void free_mem(string* ptr) {
 int main(int argc, char const *argv[])
 {
 	string text[] = {"apple", "orange", "banana"};
-	show_1(text);
+	// it is really just passing on pointer/reference to first
+	// element?
+	show_1(text); 
 	cout << sizeof(text) << endl; // 96
 
 	// problem: lose information of how many elements in array
@@ -106,7 +112,9 @@ int main(int argc, char const *argv[])
 	show_3(text, sizeof(text) / sizeof(string));
 
 	cout << &text << endl;
-	show_4(text);
+	// syntax on just as usual
+	// BUT passing on reference to whole array
+	show_4(text); 
 
 	cout << text[2] << endl;
 
@@ -152,5 +160,8 @@ returnin array
 * watch out that it is not a pointer to a local variable
 * instead, make use of 'new' and return pointer
 * can return complete array (deep copy)?
+
+Relation between pointers and references?
+Is a pointer a reference? or does it just store a reference?
 
 */
