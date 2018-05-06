@@ -1,6 +1,13 @@
 #ifndef CAT_H_
 #define CAT_H_
 
+// NEW: using a namespace to avoid conflicts
+// using namespaces is simple
+// just enclose everything that should go in a particular namespace with
+namespace cat {
+// (and don't forget closing curly brace below)
+// other parts also need to be enclosed, e.g. class implementation in Cat.cpp
+const std::string WORLD = "pluto";
 /*
 // if not listed here, comiler complains
 //  "error: ‘jump’ was not declared in this scope"
@@ -39,6 +46,8 @@ public:
 	
 	// bool happy;
 };
+
+}
 
 #endif
 

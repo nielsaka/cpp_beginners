@@ -3,6 +3,7 @@
 
 using namespace std;
 
+namespace cat {
 void Cat::speak(){
 
 	if (happy) {
@@ -46,4 +47,5 @@ Cat::Cat() {
 // destroyed
 Cat::~Cat() {
 	cout << "Cat destroyed" << endl;
+}
 }
