@@ -39,7 +39,7 @@ int main(int argc, char const *argv[])
 		here = *(ptr_text + i);
 		*(ptr_text + i) = *(ptr_text + len_text - 2 - i);
 		*(ptr_text + len_text - 2 - i) = here;
-	}
+	} // while loop is a little cleaner!
 
 	cout << text << endl;
 	return 0;
