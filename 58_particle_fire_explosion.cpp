@@ -62,9 +62,27 @@ int main(int argc, char const *argv[])
 	
 	// hexadecimal
 	// in c++, Ox indicates that hexadecimal number will follow
-	memset(buffer, 0xFF, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+	memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 	// advantage of hexadecimal: two digits = one byte;
 	// easy to read in RGB system; each color two digits e.g. FF00FF
+
+	// setting 32000 to 32003 to FF? 8 * 4 = 32 bits -> Uint32
+	buffer[32000] = 0xFFFFFFFF; // which colour is which byte?
+
+	/*
+	// same as memset(), but slower
+	// potentially more flexible; memset() just one value
+	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
+	{
+		buffer[i] = 0xFFFFFFFF;
+	}
+	*/
+
+	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
+	{
+		// experiment
+		buffer[i] = 0xFF000000; // 0xRedGreenBlueAlpha
+	}
 
 	SDL_UpdateTexture(texture, NULL, buffer, SCREEN_WIDTH * sizeof(Uint32));
 	SDL_RenderClear(renderer);
