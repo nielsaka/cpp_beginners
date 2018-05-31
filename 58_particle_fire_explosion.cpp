@@ -10,28 +10,18 @@ int main(int argc, char const *argv[])
 {
 	
 	Screen screen;
-
 	if(!screen.init()) cout << "Error initiatlising SDL" << endl; 
 
 	// game loop: trying to update everything as often as possible
 	bool quit = false;
-	SDL_Event event;
 	while (!quit) {
 		// 1. Update particles
 
 		// 2. Draw particles
 
 		// 3. check for messages/events
+		quit = !screen.processEvents();
 
-		// SDL offers convenience function writing in event
-		// --> just supply address; side-effect!?
-		while (SDL_PollEvent(&event)) {
-			// new language element: "struct"
-			// like a class, but can access all member variables and methods
-			// no definition of private/public; 
-			// breaks encapsulation, but increases efficiency
-			if (event.type == SDL_QUIT) quit = true;
-		}
 	}
 
 	screen.close();

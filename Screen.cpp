@@ -92,9 +92,21 @@ bool Screen::init() {
 
 	return true;
 }
+
 bool Screen::processEvents() {
-	return false;
+	SDL_Event event;
+	// SDL offers convenience function writing in event
+	// --> just supply address; side-effect!?
+	while (SDL_PollEvent(&event)) {
+		// new language element: "struct"
+		// like a class, but can access all member variables and methods
+		// no definition of private/public; 
+		// breaks encapsulation, but increases efficiency
+		if (event.type == SDL_QUIT) return false;
+	}
+	return true;
 }
+
 void Screen::close() {
 
 	// close and clean up resources
