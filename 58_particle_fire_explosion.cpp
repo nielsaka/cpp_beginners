@@ -108,7 +108,7 @@ int main(int argc, char const *argv[])
 			// like a class, but can access all member variables and methods
 			// no definition of private/public; 
 			// breaks encapsulation, but increases efficiency
-			if (event.type == SDL_Quit) quit = true;
+			if (event.type == SDL_QUIT) quit = true;
 		}
 	}
 
