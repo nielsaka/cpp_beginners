@@ -34,6 +34,7 @@ int main(int argc, char const *argv[])
 let compiler know location of library header files. on my machine:
 
 g++ -I/usr/include/SDL2/ 58_particle_fire_explosion.cpp -lSDL2
+g++ -I/usr/include/SDL2/ 58_particle_fire_explosion.cpp Screen.h Screen.cpp -lSDL2
 
 the order of options is important! "-lSDL2" must be after .cpp file
 why? what does -I and -l stand for? syntax of g++ command?
