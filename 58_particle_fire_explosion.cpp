@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
 	
-	Screen screen;
+	Screen screen; // initialise/construct object
 	if(!screen.init()) cout << "Error initiatlising SDL" << endl; 
 
 	// game loop: trying to update everything as often as possible
@@ -18,6 +18,16 @@ int main(int argc, char const *argv[])
 		// 1. Update particles
 
 		// 2. Draw particles
+		for (int y = 0; y < Screen::SCREEN_HEIGHT; ++y)
+		{
+			for (int x = 0; x < Screen::SCREEN_WIDTH; ++x)
+			{
+				screen.setPixel(x, y, 128, 0, 255)	;
+			}
+		}
+
+		screen.setPixel(400, 300, 255, 255, 255);
+		screen.update();
 
 		// 3. check for messages/events
 		quit = !screen.processEvents();

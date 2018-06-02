@@ -82,15 +82,52 @@ bool Screen::init() {
 	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
 	{
 		// experiment
-		m_buffer[i] = 0xFFFF0000; // 0xRedGreenBlueAlpha
+		m_buffer[i] = 0x00000000; // 0xRedGreenBlueAlpha
 	}
 
+	return true;
+}
+
+// Uint8: unsigned 8 bit int (~like a char)
+// why use special type, e.g. Uint32? It is going to be the same on all platforms!
+// int and char could have different number of bytes on different platform / os.
+
+// need to declare types of arguments again?
+void Screen::setPixel(int x, int y, Uint8 red, Uint8 blue, Uint8 green) {
+
+	// want to combine red, blue, green, alpha to a specific colour
+	// char is 1 byte; unsigned int 4 bytes.
+	// But here will use Uint32 instead (see above)
+	
+	// declare and assign
+	Uint32 colour = 0;
+
+	// set colour
+	colour += red;
+	colour <<= 8;
+	colour +=green;
+	colour <<= 8;
+	colour +=blue;
+	colour <<= 8;
+	colour += 0xFF; // alpha? opaque!
+
+	// structure of m_buffer? m_buffer just a one-dimensional array (like a long vector!)
+	// y: height
+	// x: width
+	// first 800 entries correspond to the first row (top/bottom?)
+	// second 800 entries to the second row, etc.
+	// navigate to the correct height by going through all the rows (y * SCREEN_WIDTH),
+	// then navigate to the correct width by adding x columns.
+	// both start counting at zero!
+	m_buffer[(y * SCREEN_WIDTH) + x] = colour; 
+}
+
+//draw screen again
+void Screen::update() {
 	SDL_UpdateTexture(m_texture, NULL, m_buffer, SCREEN_WIDTH * sizeof(Uint32));
 	SDL_RenderClear(m_renderer);
 	SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
 	SDL_RenderPresent(m_renderer);
-
-	return true;
 }
 
 bool Screen::processEvents() {
