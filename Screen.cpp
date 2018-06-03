@@ -93,7 +93,7 @@ bool Screen::init() {
 // int and char could have different number of bytes on different platform / os.
 
 // need to declare types of arguments again?
-void Screen::setPixel(int x, int y, Uint8 red, Uint8 blue, Uint8 green) {
+void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
 
 	// want to combine red, blue, green, alpha to a specific colour
 	// char is 1 byte; unsigned int 4 bytes.
