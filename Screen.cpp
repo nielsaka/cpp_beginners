@@ -95,6 +95,12 @@ bool Screen::init() {
 // need to declare types of arguments again?
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
 
+	// check that not off screen
+	// inefficient to have to check here; for more efficient programming, make sure elsewhere?
+	// have to check a lot of pixels
+	// but nowadays enough computing power to be able to not care
+	if (x < 0 || x > SCREEN_WIDTH - 1 || y < 0 || y > SCREEN_HEIGHT - 1) return ;
+
 	// want to combine red, blue, green, alpha to a specific colour
 	// char is 1 byte; unsigned int 4 bytes.
 	// But here will use Uint32 instead (see above)

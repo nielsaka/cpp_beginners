@@ -1,17 +1,25 @@
 #include <iostream>
 #include <SDL.h>
 #include <math.h>
+#include <stdlib.h>
+#include <time.h>
+#include "Swarm.h"
 #include "Screen.h"
 
 using namespace cop;
 using namespace std;
 
-
 int main(int argc, char const *argv[])
 {
 	
+	// set seed of RNG
+	// different every time (haha)
+	srand(time(NULL));
+
 	Screen screen; // initialise/construct object
 	if(!screen.init()) cout << "Error initiatlising SDL" << endl; 
+
+	Swarm swarm;
 
 	// game loop: trying to update everything as often as possible
 	bool quit = false;
@@ -32,27 +40,23 @@ int main(int argc, char const *argv[])
 		unsigned char green = (unsigned char)((1 + sin(elapsed * 0.0002)) * 128);
 		unsigned char blue  = (unsigned char)((1 + sin(elapsed * 0.0003)) * 128);
 
-		if (green > max) max = green;
+		//TODO: check out const .. const again
+		const Particle* const pParticles = swarm.get_particles();
 
-		for (int y = 0; y < Screen::SCREEN_HEIGHT; ++y)
+		for (int i = 0; i < Swarm::NPARTICLES; ++i)
 		{
-			for (int x = 0; x < Screen::SCREEN_WIDTH; ++x)
-			{
-				screen.setPixel(x, y, red, green, blue);
-			}
+			Particle particle = pParticles[i]; // is it a pointer or not?
+
+			int x = (particle.m_x + 1) * Screen::SCREEN_WIDTH / 2; // why transform back and forth?
+			int y = (particle.m_y + 1) * Screen::SCREEN_HEIGHT / 2;
+
+			screen.setPixel(x, y, red, green, blue);
 		}
-
 		screen.update();
-
 		// 3. check for messages/events
 		quit = !screen.processEvents();
-
 	}
-	// just checking if the largest number was really 255
-	cout << "Max: " << max << endl;
-
 	screen.close();
-
 	return 0;
 }
 
@@ -62,6 +66,8 @@ let compiler know location of library header files. on my machine:
 
 g++ -I/usr/include/SDL2/ 58_particle_fire_explosion.cpp -lSDL2
 g++ -I/usr/include/SDL2/ 58_particle_fire_explosion.cpp Screen.h Screen.cpp -lSDL2
+g++ -I/usr/include/SDL2/ 58_particle_fire_explosion.cpp Screen.h Screen.cpp Particle.cpp Particle.h -lSDL2
+g++ -I/usr/include/SDL2/ 58_particle_fire_explosion.cpp Screen.h Screen.cpp Particle.cpp Particle.h Swarm.h Swarm.cpp -lSDL2
 
 the order of options is important! "-lSDL2" must be after .cpp file
 why? what does -I and -l stand for? syntax of g++ command?
