@@ -10,7 +10,7 @@ public:
 	// public, so they are accessible from outside
 	// static, so they are shared across instances
 	const static int SCREEN_WIDTH = 800;
-	const static int SCREEN_HEIGHT = 1200; 
+	const static int SCREEN_HEIGHT = 800; 
 	
 private:
 	// prefix with m_ to mark as instance variables, not local

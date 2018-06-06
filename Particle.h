@@ -10,9 +10,8 @@ struct Particle {
 	double m_x; // "m_" stands for member variable 
 	double m_y; // why double? be able to change gradually
 
-	double xspeed;
-	double yspeed;
-
+	double m_speed;
+	double m_direction;
 // alternatively, use "struct" instead of "class"
 // default in class: member objects are private
 // default in struct: member objects are public 
