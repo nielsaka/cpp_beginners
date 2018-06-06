@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
 		int elapsed = SDL_GetTicks();
 
 		screen.clear();
-		swarm.update();
+		swarm.update(elapsed);
 
 		//why unsigned char?
 		// just making sure that values are between 0 and 255
