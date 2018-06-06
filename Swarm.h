@@ -9,6 +9,7 @@ private:
 	// programme does not know yet that it is going to be an array!
 	// arrays and pointers = very similar;
 	Particle* m_particles; 
+	int last_time;
 public:
 	// does it matter where I place const?
 	// static = same for all instances
@@ -16,7 +17,7 @@ public:
 public:
 	Swarm();
 	~Swarm(); // what is "virtual"??
-	void update();
+	void update(int elapsed);
 	// const so nothing can be changed.
 	// second const: pointer (=address?) is const, so can't point at something 
 	// else.
