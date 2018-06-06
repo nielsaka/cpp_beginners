@@ -30,6 +30,9 @@ int main(int argc, char const *argv[])
 		// 2. Draw particles
 		int elapsed = SDL_GetTicks();
 
+		screen.clear();
+		swarm.update();
+
 		//why unsigned char?
 		// just making sure that values are between 0 and 255
 		// because unsigned char cannot take other values

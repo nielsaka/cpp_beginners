@@ -16,6 +16,7 @@ public:
 public:
 	Swarm();
 	~Swarm(); // what is "virtual"??
+	void update();
 	// const so nothing can be changed.
 	// second const: pointer (=address?) is const, so can't point at something 
 	// else.

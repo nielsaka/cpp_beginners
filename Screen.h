@@ -28,6 +28,7 @@ public:
 	void close();
 	void setPixel(int x, int y, Uint8 red, Uint8 blue, Uint8 green);
 	void update();
+	void clear();
 };
 	
 }

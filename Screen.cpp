@@ -136,6 +136,10 @@ void Screen::update() {
 	SDL_RenderPresent(m_renderer);
 }
 
+void Screen::clear() {
+	memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+}
+
 bool Screen::processEvents() {
 	SDL_Event event;
 	// SDL offers convenience function writing in event
