@@ -8,7 +8,7 @@ namespace cop {
 
 // constructor with constructor initialisation list
 Screen::Screen() :
-	m_window(NULL), m_renderer(NULL), m_texture(NULL), m_buffer(NULL) {
+	m_window(NULL), m_renderer(NULL), m_texture(NULL), m_buffer1(NULL), m_buffer2(NULL) {
 
 }
 bool Screen::init() {
@@ -49,7 +49,8 @@ bool Screen::init() {
 	// type Uint32 defined by SDL
 	// int could _not_ be 32 bits on some systems!
 	// need enough for all pixels on screen
-	m_buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+	m_buffer1 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
+	m_buffer2 = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
 	// What if allocation of buffer fails? either return NULL or exception thrown
 	// --> ideally, would have to deal with it; catch it / check for it. 
 	
@@ -58,31 +59,32 @@ bool Screen::init() {
 
 	// memset really efficient function for setting values of 
 	// bunch of bits
-	memset(m_buffer, 255, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+	memset(m_buffer1, 255, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 	// R = 255, G = 255, B = 255 -> white
 	
 	// hexadecimal
 	// in c++, Ox indicates that hexadecimal number will follow
-	memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+	memset(m_buffer1, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 	// advantage of hexadecimal: two digits = one byte;
 	// easy to read in RGB system; each color two digits e.g. FF00FF
 
 	// setting 32000 to 32003 to FF? 8 * 4 = 32 bits -> Uint32
-	m_buffer[32000] = 0xFFFFFFFF; // which colour is which byte?
+	m_buffer1[32000] = 0xFFFFFFFF; // which colour is which byte?
 
 	/*
 	// same as memset(), but slower
 	// potentially more flexible; memset() just one value
 	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
 	{
-		m_buffer[i] = 0xFFFFFFFF;
+		m_buffer1[i] = 0xFFFFFFFF;
 	}
 	*/
 
 	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
 	{
 		// experiment
-		m_buffer[i] = 0x00000000; // 0xRedGreenBlueAlpha
+		m_buffer1[i] = 0x00000000; // 0xRedGreenBlueAlpha
+		m_buffer2[i] = 0x00000000; // 0xRedGreenBlueAlpha
 	}
 
 	return true;
@@ -125,19 +127,39 @@ void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue) {
 	// navigate to the correct height by going through all the rows (y * SCREEN_WIDTH),
 	// then navigate to the correct width by adding x columns.
 	// both start counting at zero!
-	m_buffer[(y * SCREEN_WIDTH) + x] = colour; 
+	m_buffer1[(y * SCREEN_WIDTH) + x] = colour; 
+	//m_buffer2[(y * SCREEN_WIDTH) + x] = colour; 
 }
 
 //draw screen again
 void Screen::update() {
-	SDL_UpdateTexture(m_texture, NULL, m_buffer, SCREEN_WIDTH * sizeof(Uint32));
+	SDL_UpdateTexture(m_texture, NULL, m_buffer1, SCREEN_WIDTH * sizeof(Uint32));
 	SDL_RenderClear(m_renderer);
 	SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
 	SDL_RenderPresent(m_renderer);
 }
 
+/*
 void Screen::clear() {
 	memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+}
+*/
+
+void Screen::boxBlur() {
+
+	// blur
+	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
+	{
+		// change only the alpha?
+		int alpha = m_buffer2[i] & 0x000000FF;
+		int rgb   = m_buffer2[i] & 0xFFFFFF00;
+		m_buffer2[i] = rgb * 0.09 + alpha * 0.09;
+	}
+
+	//switch buffer1 and buffer2
+	Uint32* temp = m_buffer1;
+	m_buffer1 = m_buffer2;
+	m_buffer2 = temp;
 }
 
 bool Screen::processEvents() {
@@ -157,7 +179,8 @@ bool Screen::processEvents() {
 void Screen::close() {
 
 	// close and clean up resources
-	delete[] m_buffer;
+	delete[] m_buffer1;
+	delete[] m_buffer2;
 
 	SDL_DestroyTexture(m_texture);
 	SDL_DestroyRenderer(m_renderer);

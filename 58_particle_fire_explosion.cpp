@@ -30,7 +30,9 @@ int main(int argc, char const *argv[])
 		// 2. Draw particles
 		int elapsed = SDL_GetTicks();
 
-		screen.clear();
+		//screen.clear();
+
+		// instead of clearing screen, will blurr screen
 		swarm.update(elapsed);
 
 		//why unsigned char?
@@ -55,6 +57,7 @@ int main(int argc, char const *argv[])
 
 			screen.setPixel(x, y, red, green, blue);
 		}
+		screen.boxBlur();
 		screen.update();
 		// 3. check for messages/events
 		quit = !screen.processEvents();
