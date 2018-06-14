@@ -147,7 +147,8 @@ void Screen::clear() {
 
 void Screen::boxBlur() {
 
-	// blur
+	// blur (first try)
+	/*
 	for (int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
 	{
 		// change only the alpha?
@@ -155,11 +156,57 @@ void Screen::boxBlur() {
 		int rgb   = m_buffer2[i] & 0xFFFFFF00;
 		m_buffer2[i] = rgb * 0.09 + alpha * 0.09;
 	}
+	*/
 
 	//switch buffer1 and buffer2
+	// nice feature: not copying all the values, but just installing additional pointer
+	// (which, assumably is fairly cheap?)
 	Uint32* temp = m_buffer1;
 	m_buffer1 = m_buffer2;
 	m_buffer2 = temp;
+
+	for (int y = 0; y < SCREEN_HEIGHT; ++y)
+	{
+		for (int x = 0; x < SCREEN_WIDTH; ++x)
+		{
+			int red_total = 0;
+			int green_total = 0;
+			int blue_total = 0;
+			// average pixels surrounding current pixel
+			for (int row = -2; row < 2; ++row)
+			{
+				for (int col = -2; col < 2; ++col)
+				{
+					int x_pix = x + col;
+					int y_pix = y + row;
+
+					if (
+						x_pix >= 0 &&
+						x_pix < SCREEN_WIDTH &&
+						y_pix >= 0 &&
+						y_pix < SCREEN_HEIGHT
+						) {
+						Uint32 rgb = m_buffer2[y_pix * SCREEN_WIDTH + x_pix];
+
+						// add red, green and blue components
+						Uint8 red   = rgb >> 24;
+						Uint8 green = rgb >> 16;
+						Uint8 blue  = rgb >> 8;
+
+						red_total += red;
+						green_total += green;
+						blue_total += blue;
+					}
+				}
+			}
+			// re-declare since not in scope of for loop above (try things...?)
+			Uint8 red = red_total / 25;
+			Uint8 green = green_total / 25;
+			Uint8 blue = blue_total / 25;
+
+			setPixel(x, y, red, green, blue);
+		}
+	}
 }
 
 bool Screen::processEvents() {
