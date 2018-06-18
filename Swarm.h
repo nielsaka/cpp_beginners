@@ -13,7 +13,7 @@ private:
 public:
 	// does it matter where I place const?
 	// static = same for all instances
-	static int const NPARTICLES = 5000;
+	static int const NPARTICLES = 1000;
 public:
 	Swarm();
 	~Swarm(); // what is "virtual"??

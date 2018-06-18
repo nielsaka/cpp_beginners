@@ -173,9 +173,9 @@ void Screen::boxBlur() {
 			int green_total = 0;
 			int blue_total = 0;
 			// average pixels surrounding current pixel
-			for (int row = -2; row < 2; ++row)
+			for (int row = -1; row <= 1; ++row)
 			{
-				for (int col = -2; col < 2; ++col)
+				for (int col = -1; col <= 1; ++col)
 				{
 					int x_pix = x + col;
 					int y_pix = y + row;
@@ -200,9 +200,9 @@ void Screen::boxBlur() {
 				}
 			}
 			// re-declare since not in scope of for loop above (try things...?)
-			Uint8 red = red_total / 25;
-			Uint8 green = green_total / 25;
-			Uint8 blue = blue_total / 25;
+			Uint8 red = red_total / 9;
+			Uint8 green = green_total / 9;
+			Uint8 blue = blue_total / 9;
 
 			setPixel(x, y, red, green, blue);
 		}
